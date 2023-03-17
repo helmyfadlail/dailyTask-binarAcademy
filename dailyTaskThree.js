@@ -4,7 +4,7 @@ let persons = [
     age: 30,
     eyeColor: "green",
     name: "Kelli Atkins",
-    address: "Bandung",
+    address: "Bali",
     registered: "2020-10-26T08:35:43 -07:00",
     friends: [
       {
@@ -148,7 +148,7 @@ let persons = [
       },
       {
         id: 1,
-        name: "Shifly",
+        name: "Theresia",
         isActive: false,
         favoriteFruit: "apple",
         gender: "male",
@@ -348,7 +348,7 @@ let persons = [
       },
       {
         id: 2,
-        name: "Shifly",
+        name: "Farid",
         isActive: true,
         favoriteFruit: "apple",
         gender: "male",
@@ -432,39 +432,144 @@ function checkValue(key, value) {
   return key === value;
 }
 
+function numberOne(register) {
+  return register < "2022";
+}
+
+function numberTwo(address) {
+  return checkValue("Bali", address);
+}
+
+function numberThree(hobby) {
+  return checkValue("football", hobby);
+}
+
+function numberFour(id) {
+  return checkValue(2, id);
+}
+
+function numberFive(gender, hobby) {
+  return checkValue("male", gender) && checkValue("basketball", hobby);
+}
+
+function numberSix(isActive, gender, favFruit) {
+  return checkValue(true, isActive) && checkValue("female", gender) && checkValue("strawberry", favFruit);
+}
+
+function numberSeven(name) {
+  return checkValue("Theresia", name);
+}
+
+function numberEight(isActive, id) {
+  return checkValue(true, isActive) && checkValue(1, id);
+}
+
+function numberNine(eyeColor, favFruit, hobby) {
+  return checkValue("brown", eyeColor) && checkValue("banana", favFruit) && checkValue("basketball", hobby);
+}
+
+function numberTen(gender, favFruit) {
+  return checkValue("male", gender) || checkValue("banana", favFruit);
+}
+
 function display(data, number) {
   let arr = [];
   for (let i = 0; i < data.length; i++) {
-    for (let j = 0; j < data[i].friends.length; j++) {
-      switch (number) {
-        case 6:
-          if (checkValue(true, data[i].friends[j].isActive) && checkValue("female", data[i].friends[j].gender) && checkValue("strawberry", data[i].friends[j].favoriteFruit)) {
+    switch (number) {
+      case 1:
+        if (numberOne(data[i].registered.slice(0, 4))) {
+          arr.push(data[i].name);
+        }
+        break;
+      case 2:
+        if (numberTwo(data[i].address)) {
+          arr.push(data[i].name);
+        }
+        break;
+      case 3:
+        for (let j = 0; j < data[i].friends.length; j++) {
+          for (let k = 0; k < data[i].friends[j].hobby.length; k++) {
+            if (numberThree(data[i].friends[j].hobby[k].hobby)) {
+              arr.push(data[i].friends[j].name);
+            }
+          }
+        }
+        break;
+      case 4:
+        for (let j = 0; j < data[i].friends.length; j++) {
+          for (let k = 0; k < data[i].friends[j].hobby.length; k++) {
+            if (numberFour(data[i].friends[j].id)) {
+              arr.push(data[i].friends[j].hobby[k].hobby);
+            }
+          }
+        }
+        break;
+      case 5:
+        for (let j = 0; j < data[i].friends.length; j++) {
+          for (let k = 0; k < data[i].friends[j].hobby.length; k++) {
+            if (numberFive(data[i].friends[j].gender, data[i].friends[j].hobby[k].hobby)) {
+              arr.push(data[i].friends[j].name);
+            }
+          }
+        }
+        break;
+      case 6:
+        for (let j = 0; j < data[i].friends.length; j++) {
+          if (numberSix(data[i].friends[j].isActive, data[i].friends[j].gender, data[i].friends[j].favoriteFruit)) {
             arr.push(data[i].friends[j].name);
           }
-          break;
-        case 7:
-          if (checkValue("Theresia", data[i].friends[j].name)) {
+        }
+        break;
+      case 7:
+        for (let j = 0; j < data[i].friends.length; j++) {
+          if (numberSeven(data[i].friends[j].name)) {
             arr.push(data[i].name);
           }
-          break;
-        case 9:
+        }
+        break;
+      case 8:
+        for (let j = 0; j < data[i].friends.length; j++) {
           for (let k = 0; k < data[i].friends[j].hobby.length; k++) {
-            if (checkValue("brown", data[i].eyeColor) && checkValue("banana", data[i].friends[j].favoriteFruit) && checkValue("basketball", data[i].friends[j].hobby[k].hobby)) {
+            if (numberEight(data[i].friends[j].isActive, data[i].friends[j].hobby[k].id)) {
+              arr.push(data[i].friends[j].hobby[k].hobby);
+            }
+          }
+        }
+        break;
+      case 9:
+        for (let j = 0; j < data[i].friends.length; j++) {
+          for (let k = 0; k < data[i].friends[j].hobby.length; k++) {
+            if (numberNine(data[i].eyeColor, data[i].friends[j].favoriteFruit, data[i].friends[j].hobby[k].hobby)) {
               arr.push(data[i].name);
             }
           }
-          break;
-      }
+        }
+        break;
+      case 10:
+        if (data[i].registered.slice(0, 4) === "2022") {
+          for (let j = 0; j < data[i].friends.length; j++) {
+            for (let k = 0; k < data[i].friends[j].hobby.length; k++) {
+              if (numberTen(data[i].friends[j].gender, data[i].friends[j].favoriteFruit)) {
+                arr.push(data[i].name);
+                break;
+              }
+            }
+          }
+        }
+        break;
     }
   }
   return arr;
 }
-
+console.log("1). display/print person yang registered dibawah tahun 2022");
+console.log("2). display person yang address nya Bali");
+console.log("3). display friends yang hobby nya football:");
+console.log("4). display hobby dari friends id 2:");
+console.log("5). display friends yang gender nya male dan mempunyai hobby basketball:");
 console.log("6). display friends yang isActive nya true dan gender nya female dan favorite fruit nya strawberry:");
-console.log(display(persons, 6));
-
 console.log("7). display siapa saja yang mempunyai teman name Theresia:");
-console.log(display(persons, 7));
-
+console.log("8). display hobby id 1 dari friends yang isActive nya true:");
 console.log("9). display person yang eye color nya brown dan favorite fruit nya banana dan mempunyai teman hobby basketball:");
-console.log(display(persons, 9));
+console.log("10). display person yang mempunyai friends gender male atau favorite fruit nya banana dan registered di tahun 2023:");
+console.log("=======================================");
+console.log(display(persons, 10));
